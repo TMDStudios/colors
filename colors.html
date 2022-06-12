@@ -8,11 +8,14 @@
     <title>Document</title>
 </head>
 <body>
-    <div id="container">
-    <div>
     <div class="controls">
+        <input type="number" id="colors" placeholder="colors (2-16)">
+        <input type="number" id="size" placeholder="size (4-64)">
+        <button onclick="regenerateBlock()">Reset</button>
         <button onclick="changeColor()">Speed Up</button>
         <button onclick="activate()">Start/Stop</button>
+    </div>
+    <div id="container">
     </div>
     <script type="text/javascript" src="colors.js"></script>
 </body>
