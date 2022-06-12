@@ -14,3 +14,8 @@
     justify-content: left;
     align-items: center;
 }
+.controls {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}

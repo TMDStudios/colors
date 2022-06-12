@@ -1,39 +1,26 @@
-var shuffle = false;
+var active = false;
 var blocks = 0;
 var blockNum = 0;
 
-function activate(){
-    shuffle=!shuffle;
-    //for(var i = 1; i<5; i++){generateBlock();}
-    generateBlock();
-    //if(shuffle){newColors();}
-}
+generateBlock();
 
-function newColors(){
-    //const children = document.getElementById("row").children.length;
-    //console.log("children - "+children);
-    for(var i = 1; i<blockNum; i++){
-        const colorBlock = document.getElementById("block"+i).className;
-        const colorChoice = Math.floor(Math.random()*16);
-        colorBlock.style = "background-color: "+getColor(colorChoice)+"; width: 16px; height: 16px;";
-        console.log("Updated block number "+i);
-    }
-    //if(shuffle){setTimeout(newColors, 1000);}
+function activate(){
+    active=!active;
+    if(active){changeColor();}
 }
 
 function changeColor(){
     const colorNum = Math.floor(Math.random()*blockNum);
-    //console.log("colorNum = "+colorNum);
     const colorBlock = document.getElementById("block"+colorNum);
-    //console.log("colorBlock = "+colorBlock);
     const colorChoice = Math.floor(Math.random()*16);
-    colorBlock.style = "background-color: "+getColor(colorChoice)+"; width: 16px; height: 16px;";
-    
-    setTimeout(changeColor, 50);
+    if(colorBlock.style.backgroundColor!=="yellow"){
+        colorBlock.style = "background-color: "+getColor(colorChoice)+"; width: 16px; height: 16px;";
+    }
+    if(active){setTimeout(changeColor, 50);}
 }
 
 function generateBlock(){
-    for(var i = 1; i<5; i++){
+    for(var i = 1; i<17; i++){
         const rootParent = document.getElementById("container");
         const rootChild = document.createElement("div");
         rootChild.className = "row";
@@ -46,12 +33,6 @@ function generateBlock(){
             blockNum++;
             rootChild.appendChild(child);  
         }
-    }
-    if(blocks<3){
-        blocks++;
-        setTimeout(generateBlock, 100);
-    }else{
-        setTimeout(changeColor, 50);
     }
 }
 
