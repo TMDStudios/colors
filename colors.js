@@ -4,6 +4,7 @@ var blockNum = 0;
 var colors = 16;
 var size = 16;
 var target;
+var complete = false;
 
 generateBlock();
 
@@ -19,11 +20,29 @@ function changeColor(){
     if(target!==null){
         if(colorBlock.style.backgroundColor!==target){
             colorBlock.style = "background-color: "+getColor(colorChoice)+"; width: 16px; height: 16px;";
+            checkBlock();
         }
     }else{
         colorBlock.style = "background-color: "+getColor(colorChoice)+"; width: 16px; height: 16px;";
     }
     if(active){setTimeout(changeColor, 50);}
+}
+
+function checkBlock(){
+    for(var i = 0; i<=blockNum; i++){
+        const colorBlock = document.getElementById("block"+i);
+        try{
+            if(colorBlock.style.backgroundColor!==target){
+                break;
+            }
+        }catch(e){
+            break;
+        }
+        if(i===blockNum-1){
+            console.log("DONE!");
+            active = false;
+        }
+    }
 }
 
 function generateBlock(){
