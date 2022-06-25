@@ -6,6 +6,12 @@ var size = 16;
 var target;
 var complete = false;
 
+const smiley = [11, 14, 28, 29, 42, 47, 51, 52, 53, 54]
+const mad = [10, 15, 19, 22, 35, 36, 37, 38, 42, 47]
+
+const patterns = [smiley, mad]
+var patternChoice;
+
 generateBlock();
 
 function activate(){
@@ -16,7 +22,12 @@ function activate(){
 function changeColor(){
     const colorNum = Math.floor(Math.random()*blockNum);
     const colorBlock = document.getElementById("block"+colorNum);
-    const colorChoice = Math.floor(Math.random()*colors);
+    var colorChoice = Math.floor(Math.random()*colors);
+    if(patternChoice!==null){
+        if(patterns[patternChoice].indexOf(colorNum+1)>-1){
+            colorChoice=9
+        }
+    }
     if(target!==null){
         if(colorBlock.style.backgroundColor!==target){
             colorBlock.style = "background-color: "+getColor(colorChoice)+"; width: 16px; height: 16px;";
@@ -53,7 +64,7 @@ function generateBlock(){
         rootParent.appendChild(rootChild);  
         for(var j = 1; j<=size; j++){
             const child = document.createElement("div");
-            const colorChoice = Math.floor(Math.random()*colors);
+            var colorChoice = Math.floor(Math.random()*colors);
             child.style = "background-color: "+getColor(colorChoice)+"; width: 16px; height: 16px;";
             child.id = "block"+blockNum;
             blockNum++;
@@ -67,11 +78,19 @@ function regenerateBlock(){
     colors = document.getElementById("colors").value;
     size = document.getElementById("size").value;
     target = document.getElementById("target").value;
+    patternChoice = document.getElementById("pattern").value;
     if(colors<2||colors===null){colors=2;}
     if(colors>16){colors=16;}
     if(size<4||size===null){size=4;}
     if(size>64){size=64;}
     if(target==="none"){target=null;}
+    if(patternChoice==="none"){
+        patternChoice=null;
+    }else{
+        size=8;
+        document.getElementById("size").value = 8;
+        alert("Block size set to 8 due to pattern")
+    }
     const rootParent = document.getElementById("container");
     removeChildren(rootParent);
     generateBlock();

@@ -9,13 +9,6 @@
 .block {
     margin: auto;
 }
-.inner-block {
-    display: flex;
-    justify-content: left;
-    align-items: center;
-}
-.controls {
-    display: flex;
-    justify-content: left;
-    align-items: center;
+input {
+    width: 5vw;
 }
