@@ -5,6 +5,13 @@ var colors = 16;
 var size = 16;
 var target;
 var complete = false;
+var r = 255;
+var g = 0;
+var b = 255;
+var rDown = true;
+var gDown = false;
+var bDown = true;
+const container = document.getElementById("container");
 
 const smiley = [11, 14, 28, 29, 42, 47, 51, 52, 53, 54]
 const mad = [10, 15, 19, 22, 35, 36, 37, 38, 42, 47]
@@ -16,19 +23,30 @@ generateBlock();
 
 function activate(){
     active=!active;
-    if(active){changeColor();}
+    if(active){changeColor(); handleBg();}
+}
+
+function handleBg(){
+    rDown ? r-=3 : r+=3;
+    if(r<=0||r>=255){rDown=!rDown;}
+    gDown ? g-=5 : g+=5;
+    if(g<=0||g>=255){gDown=!gDown;}
+    bDown ? b-- : b++;
+    if(b<=0||b>=255){bDown=!bDown;}
+    document.body.style.backgroundColor = 'rgba(' + r + ',' + g + ',' + b + ',' + .1 + ')';
+    if(active){setTimeout(handleBg, 33);}
 }
 
 function changeColor(){
     const colorNum = Math.floor(Math.random()*blockNum);
     const colorBlock = document.getElementById("block"+colorNum);
     var colorChoice = Math.floor(Math.random()*colors);
-    if(patternChoice!==null){
+    if(patternChoice!==null&&patternChoice!==undefined){
         if(patterns[patternChoice].indexOf(colorNum+1)>-1){
             colorChoice=9
         }
     }
-    if(target!==null){
+    if(target!==null&&target!==undefined){
         if(colorBlock.style.backgroundColor!==target){
             colorBlock.style = "background-color: "+getColor(colorChoice)+"; width: 16px; height: 16px;";
             checkBlock();
