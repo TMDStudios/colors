@@ -58,7 +58,7 @@ function checkBlock(){
 
 function generateBlock(){
     for(var i = 1; i<=size; i++){
-        const rootParent = document.getElementById("container");
+        const rootParent = document.getElementById("block-container");
         const rootChild = document.createElement("div");
         rootChild.className = "row";
         rootParent.appendChild(rootChild);  
@@ -91,7 +91,7 @@ function regenerateBlock(){
         document.getElementById("size").value = 8;
         alert("Block size set to 8 due to pattern")
     }
-    const rootParent = document.getElementById("container");
+    const rootParent = document.getElementById("block-container");
     removeChildren(rootParent);
     generateBlock();
 }
