@@ -42,17 +42,20 @@ function changeColor(){
     const colorBlock = document.getElementById("block"+colorNum);
     var colorChoice = Math.floor(Math.random()*colors);
     if(patternChoice!==null&&patternChoice!==undefined){
-        if(patterns[patternChoice].indexOf(colorNum+1)>-1){
-            colorChoice=9
-        }
-    }
-    if(target!==null&&target!==undefined){
-        if(colorBlock.style.backgroundColor!==target){
+        if(patterns[patternChoice].indexOf(colorNum+1)==-1){
+            colorBlock.style = "background-color: "+'rgba(' + r + ',' + g + ',' + b + ',' + .1 + ')'+"; width: 16px; height: 16px;";
+        }else{
             colorBlock.style = "background-color: "+getColor(colorChoice)+"; width: 16px; height: 16px;";
-            checkBlock();
         }
     }else{
-        colorBlock.style = "background-color: "+getColor(colorChoice)+"; width: 16px; height: 16px;";
+        if(target!==null&&target!==undefined){
+            if(colorBlock.style.backgroundColor!==target){
+                colorBlock.style = "background-color: "+getColor(colorChoice)+"; width: 16px; height: 16px;";
+                checkBlock();
+            }
+        }else{
+            colorBlock.style = "background-color: "+getColor(colorChoice)+"; width: 16px; height: 16px;";
+        }
     }
     if(active){setTimeout(changeColor, 50);}
 }
