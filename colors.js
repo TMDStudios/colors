@@ -15,8 +15,9 @@ const container = document.getElementById("container");
 
 const smiley = [11, 14, 28, 29, 42, 47, 51, 52, 53, 54]
 const mad = [10, 15, 19, 22, 35, 36, 37, 38, 42, 47]
+const face = [10, 11, 12, 13, 14, 15, 18, 20, 21, 23, 26, 28, 29, 31, 34, 35, 36, 37, 38, 39, 42, 47, 50, 51, 52, 53, 54, 55]
 
-const patterns = [smiley, mad]
+const patterns = [smiley, mad, face]
 var patternChoice;
 
 generateBlock();
@@ -128,35 +129,35 @@ function getColor(colorNumber){
         case 0:
             return "black"
         case 1:
-            return "silver"
+            return "red"
         case 2:
-            return "gray"
+            return "green"
         case 3:
-            return "white"
+            return "blue"
         case 4:
             return "maroon"
         case 5:
-            return "red"
-        case 6:
-            return "purple"
-        case 7:
-            return "fuchsia"
-        case 8:
-            return "green"
-        case 9:
-            return "lime"
-        case 10:
             return "olive"
+        case 6:
+            return "lime"
+        case 7:
+            return "teal"
+        case 8:
+            return "navy"
+        case 9:
+            return "purple"
+        case 10:
+            return "aqua"
         case 11:
             return "yellow"
         case 12:
-            return "navy"
+            return "fuchsia"
         case 13:
-            return "blue"
+            return "white"
         case 14:
-            return "teal"
+            return "gray"
         case 15:
-            return "aqua"
+            return "silver"
         default:
             return "black"
     }
