@@ -23,6 +23,7 @@ var patternChoice;
 generateBlock();
 
 function activate(){
+    console.log(target)
     active=!active;
     if(active){changeColor(); handleBg();}
 }
@@ -50,9 +51,15 @@ function changeColor(){
         }
     }else{
         if(target!==null&&target!==undefined){
-            if(colorBlock.style.backgroundColor!==target){
-                colorBlock.style = "background-color: "+getColor(colorChoice)+"; width: 16px; height: 16px;";
-                checkBlock();
+            if(target=="transparent"){
+                colorBlock.style = "background-color: "+'rgba(' + r + ',' + g + ',' + b + ',' + .1 + ')'+"; width: 16px; height: 16px;";
+            }else if(target=="shrink"){
+                colorBlock.style = "background-color: "+'rgba(' + r + ',' + g + ',' + b + ',' + .1 + ')';
+            }else{
+                if(colorBlock.style.backgroundColor!==target){
+                    colorBlock.style = "background-color: "+getColor(colorChoice)+"; width: 16px; height: 16px;";
+                    checkBlock();
+                }
             }
         }else{
             colorBlock.style = "background-color: "+getColor(colorChoice)+"; width: 16px; height: 16px;";
