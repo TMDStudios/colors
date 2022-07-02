@@ -13,11 +13,14 @@ var gDown = false;
 var bDown = true;
 const container = document.getElementById("container");
 
-const smiley = [11, 14, 28, 29, 42, 47, 51, 52, 53, 54]
+const happy = [11, 14, 28, 29, 42, 47, 51, 52, 53, 54]
 const mad = [10, 15, 19, 22, 35, 36, 37, 38, 42, 47]
 const face = [10, 11, 12, 13, 14, 15, 18, 20, 21, 23, 26, 28, 29, 31, 34, 35, 36, 37, 38, 39, 42, 47, 50, 51, 52, 53, 54, 55]
+const square = [1, 2, 3, 4, 5, 6, 7, 8, 9, 16, 17, 24, 25, 32, 33, 40, 41, 48, 49, 56, 57, 58, 59, 60, 61, 62, 63, 64]
+const circle = [3, 4, 5, 6, 10, 15, 17, 24, 25, 32, 33, 40, 41, 48, 50, 55, 59, 60, 61, 62]
+const smiley = [3, 4, 5, 6, 10, 15, 17, 19, 22, 24, 25, 32, 33, 35, 38, 40, 41, 44, 45, 48, 50, 55, 59, 60, 61, 62]
 
-const patterns = [smiley, mad, face]
+const patterns = [happy, mad, face, square, circle, smiley]
 var patternChoice;
 
 generateBlock();
