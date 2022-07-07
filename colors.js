@@ -25,6 +25,15 @@ const x = [1, 2, 7, 8, 10, 11, 14, 15, 19, 20, 21, 22, 28, 29, 36, 37, 43, 44, 4
 const patterns = [happy, mad, face, square, circle, smiley, crosshair, x]
 var patternChoice;
 
+const bounce1 = [43,44,45,46,50,51,52,53,54,55,57,58,59,60,61,62,63,64]
+const bounce2 = [19,20,21,22,26,27,28,29,30,31,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,58,59,60,61,62,63]
+const bounce3 = [11,12,13,14,18,19,20,21,22,23,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,50,51,52,53,54,55,59,60,61,62]
+const bounce4 = [3,4,5,6,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,42,43,44,45,46,47,51,52,53,54]
+
+const bounce = [bounce1, bounce2, bounce3, bounce4, bounce3, bounce2]
+var currentBounce = 0;
+var animation;
+
 generateBlock();
 
 function activate(){
@@ -53,6 +62,22 @@ function changeColor(){
             colorBlock.style = "background-color: "+'rgba(' + r + ',' + g + ',' + b + ',' + .1 + ')'+"; width: 16px; height: 16px;";
         }else{
             colorBlock.style = "background-color: "+getColor(colorChoice)+"; width: 16px; height: 16px;";
+        }
+    }else if(animation!==null&&animation!==undefined){
+        if(currentBounce>=bounce.length){
+            currentBounce=0
+        }else{
+            if(b%3==0){
+                for(var i = 0; i<64; i++){
+                    const bounceBlock = document.getElementById("block"+i);
+                    if(bounce[currentBounce].indexOf(i+1)==-1){
+                        bounceBlock.style = "background-color: "+'rgba(' + r + ',' + g + ',' + b + ',' + .1 + ')'+"; width: 16px; height: 16px;";
+                    }else{
+                        bounceBlock.style = "background-color: "+getColor(0)+"; width: 16px; height: 16px;";
+                    }
+                }
+                currentBounce++;
+            }
         }
     }else{
         if(target!==null&&target!==undefined){
@@ -113,6 +138,7 @@ function regenerateBlock(){
     size = document.getElementById("size").value;
     target = document.getElementById("target").value;
     patternChoice = document.getElementById("pattern").value;
+    animation = document.getElementById("animation").value;
     if(colors<2||colors===null){colors=2;}
     if(colors>16){colors=16;}
     if(size<4||size===null){size=4;}
@@ -124,6 +150,13 @@ function regenerateBlock(){
         size=8;
         document.getElementById("size").value = 8;
         alert("Block size set to 8 due to pattern")
+    }
+    if(animation==="none"){
+        animation=null;
+    }else{
+        size=8;
+        document.getElementById("size").value = 8;
+        alert("Block size set to 8 due to animation")
     }
     const rootParent = document.getElementById("block-container");
     removeChildren(rootParent);
