@@ -62,7 +62,7 @@ function handleAnimation(){
             if(bounce[currentBounce].indexOf(i+1)==-1){
                 bounceBlock.style = "background-color: "+'rgba(' + r + ',' + g + ',' + b + ',' + .1 + ')'+"; width: 16px; height: 16px;";
             }else{
-                bounceBlock.style = "background-color: "+getColor(0)+"; width: 16px; height: 16px;";
+                bounceBlock.style = "background-color: "+getColor(Math.floor(Math.random()*colors))+"; width: 16px; height: 16px;";
             }
         }
         currentBounce++;
