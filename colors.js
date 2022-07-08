@@ -53,6 +53,23 @@ function handleBg(){
     if(active){setTimeout(handleBg, 33);}
 }
 
+function handleAnimation(){
+    if(currentBounce>=bounce.length){
+        currentBounce=0
+    }else{
+        for(var i = 0; i<64; i++){
+            const bounceBlock = document.getElementById("block"+i);
+            if(bounce[currentBounce].indexOf(i+1)==-1){
+                bounceBlock.style = "background-color: "+'rgba(' + r + ',' + g + ',' + b + ',' + .1 + ')'+"; width: 16px; height: 16px;";
+            }else{
+                bounceBlock.style = "background-color: "+getColor(0)+"; width: 16px; height: 16px;";
+            }
+        }
+        currentBounce++;
+    }
+    if(active){setTimeout(handleAnimation, 100);}
+}
+
 function changeColor(){
     const colorNum = Math.floor(Math.random()*blockNum);
     const colorBlock = document.getElementById("block"+colorNum);
@@ -64,21 +81,7 @@ function changeColor(){
             colorBlock.style = "background-color: "+getColor(colorChoice)+"; width: 16px; height: 16px;";
         }
     }else if(animation!==null&&animation!==undefined){
-        if(currentBounce>=bounce.length){
-            currentBounce=0
-        }else{
-            if(b%3==0){
-                for(var i = 0; i<64; i++){
-                    const bounceBlock = document.getElementById("block"+i);
-                    if(bounce[currentBounce].indexOf(i+1)==-1){
-                        bounceBlock.style = "background-color: "+'rgba(' + r + ',' + g + ',' + b + ',' + .1 + ')'+"; width: 16px; height: 16px;";
-                    }else{
-                        bounceBlock.style = "background-color: "+getColor(0)+"; width: 16px; height: 16px;";
-                    }
-                }
-                currentBounce++;
-            }
-        }
+        handleAnimation();
     }else{
         if(target!==null&&target!==undefined){
             if(target=="transparent"){
@@ -95,7 +98,7 @@ function changeColor(){
             colorBlock.style = "background-color: "+getColor(colorChoice)+"; width: 16px; height: 16px;";
         }
     }
-    if(active){setTimeout(changeColor, 50);}
+    if(active && (animation===null&&animation===undefined)){setTimeout(changeColor, 50);}
 }
 
 function checkBlock(){
