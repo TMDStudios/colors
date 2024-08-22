@@ -4,6 +4,7 @@ var blockNum = 0;
 var colors = 16;
 var size = 16;
 var target;
+var demoMode = false;
 var complete = false;
 var r = 255;
 var g = 0;
@@ -13,31 +14,30 @@ var gDown = false;
 var bDown = true;
 const container = document.getElementById("container");
 
-const happy = [11, 14, 28, 29, 42, 47, 51, 52, 53, 54]
-const mad = [10, 15, 19, 22, 35, 36, 37, 38, 42, 47]
-const face = [10, 11, 12, 13, 14, 15, 18, 20, 21, 23, 26, 28, 29, 31, 34, 35, 36, 37, 38, 39, 42, 47, 50, 51, 52, 53, 54, 55]
-const square = [1, 2, 3, 4, 5, 6, 7, 8, 9, 16, 17, 24, 25, 32, 33, 40, 41, 48, 49, 56, 57, 58, 59, 60, 61, 62, 63, 64]
-const circle = [3, 4, 5, 6, 10, 15, 17, 24, 25, 32, 33, 40, 41, 48, 50, 55, 59, 60, 61, 62]
-const smiley = [3, 4, 5, 6, 10, 15, 17, 19, 22, 24, 25, 32, 33, 35, 38, 40, 41, 44, 45, 48, 50, 55, 59, 60, 61, 62]
-const crosshair = [3, 4, 5, 6, 10, 15, 17, 19, 22, 24, 25, 28, 29, 32, 33, 36, 37, 40, 41, 43, 46, 48, 50, 55, 59, 60, 61, 62]
-const x = [1, 2, 7, 8, 10, 11, 14, 15, 19, 20, 21, 22, 28, 29, 36, 37, 43, 44, 45, 46, 50, 51, 54, 55, 57, 58, 63, 64]
+const happy = [11, 14, 28, 29, 42, 47, 51, 52, 53, 54];
+const mad = [10, 15, 19, 22, 35, 36, 37, 38, 42, 47];
+const face = [10, 11, 12, 13, 14, 15, 18, 20, 21, 23, 26, 28, 29, 31, 34, 35, 36, 37, 38, 39, 42, 47, 50, 51, 52, 53, 54, 55];
+const square = [1, 2, 3, 4, 5, 6, 7, 8, 9, 16, 17, 24, 25, 32, 33, 40, 41, 48, 49, 56, 57, 58, 59, 60, 61, 62, 63, 64];
+const circle = [3, 4, 5, 6, 10, 15, 17, 24, 25, 32, 33, 40, 41, 48, 50, 55, 59, 60, 61, 62];
+const smiley = [3, 4, 5, 6, 10, 15, 17, 19, 22, 24, 25, 32, 33, 35, 38, 40, 41, 44, 45, 48, 50, 55, 59, 60, 61, 62];
+const crosshair = [3, 4, 5, 6, 10, 15, 17, 19, 22, 24, 25, 28, 29, 32, 33, 36, 37, 40, 41, 43, 46, 48, 50, 55, 59, 60, 61, 62];
+const x = [1, 2, 7, 8, 10, 11, 14, 15, 19, 20, 21, 22, 28, 29, 36, 37, 43, 44, 45, 46, 50, 51, 54, 55, 57, 58, 63, 64];
 
-const patterns = [happy, mad, face, square, circle, smiley, crosshair, x]
+const patterns = [happy, mad, face, square, circle, smiley, crosshair, x];
 var patternChoice;
 
-const bounce1 = [43,44,45,46,50,51,52,53,54,55,57,58,59,60,61,62,63,64]
-const bounce2 = [19,20,21,22,26,27,28,29,30,31,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,58,59,60,61,62,63]
-const bounce3 = [11,12,13,14,18,19,20,21,22,23,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,50,51,52,53,54,55,59,60,61,62]
-const bounce4 = [3,4,5,6,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,42,43,44,45,46,47,51,52,53,54]
+const bounce1 = [43,44,45,46,50,51,52,53,54,55,57,58,59,60,61,62,63,64];
+const bounce2 = [19,20,21,22,26,27,28,29,30,31,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,58,59,60,61,62,63];
+const bounce3 = [11,12,13,14,18,19,20,21,22,23,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,50,51,52,53,54,55,59,60,61,62];
+const bounce4 = [3,4,5,6,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,42,43,44,45,46,47,51,52,53,54];
 
-const bounce = [bounce1, bounce2, bounce3, bounce4, bounce3, bounce2]
+const bounce = [bounce1, bounce2, bounce3, bounce4, bounce3, bounce2];
 var currentBounce = 0;
 var animation;
 
 generateBlock();
 
 function activate(){
-    console.log(target)
     active=!active;
     if(active){changeColor(); handleBg();}
 }
@@ -55,7 +55,7 @@ function handleBg(){
 
 function handleAnimation(){
     if(currentBounce>=bounce.length){
-        currentBounce=0
+        currentBounce=0;
     }else{
         for(var i = 0; i<64; i++){
             const bounceBlock = document.getElementById("block"+i);
@@ -74,7 +74,7 @@ function changeColor(){
     const colorNum = Math.floor(Math.random()*blockNum);
     const colorBlock = document.getElementById("block"+colorNum);
     var colorChoice = Math.floor(Math.random()*colors);
-    if(patternChoice!==null&&patternChoice!==undefined){
+    if(patternChoice!==null&&patternChoice!==undefined&&!demoMode){
         if(patterns[patternChoice].indexOf(colorNum+1)==-1){
             colorBlock.style = "background-color: "+'rgba(' + r + ',' + g + ',' + b + ',' + .1 + ')'+"; width: 16px; height: 16px;";
         }else{
@@ -98,7 +98,7 @@ function changeColor(){
             colorBlock.style = "background-color: "+getColor(colorChoice)+"; width: 16px; height: 16px;";
         }
     }
-    if(active && (animation===null&&animation===undefined)){setTimeout(changeColor, 50);}
+    if(active && (animation===null||animation===undefined)){setTimeout(changeColor, 50);}
 }
 
 function checkBlock(){
@@ -123,14 +123,14 @@ function generateBlock(){
         const rootParent = document.getElementById("block-container");
         const rootChild = document.createElement("div");
         rootChild.className = "row";
-        rootParent.appendChild(rootChild);  
+        rootParent.appendChild(rootChild);
         for(var j = 1; j<=size; j++){
             const child = document.createElement("div");
             var colorChoice = Math.floor(Math.random()*colors);
             child.style = "background-color: "+getColor(colorChoice)+"; width: 16px; height: 16px;";
             child.id = "block"+blockNum;
             blockNum++;
-            rootChild.appendChild(child);  
+            rootChild.appendChild(child);
         }
     }
 }
@@ -152,14 +152,14 @@ function regenerateBlock(){
     }else{
         size=8;
         document.getElementById("size").value = 8;
-        alert("Block size set to 8 due to pattern")
+        alert("Block size set to 8 due to pattern");
     }
     if(animation==="none"){
         animation=null;
     }else{
         size=8;
         document.getElementById("size").value = 8;
-        alert("Block size set to 8 due to animation")
+        alert("Block size set to 8 due to animation");
     }
     const rootParent = document.getElementById("block-container");
     removeChildren(rootParent);
@@ -208,5 +208,63 @@ function getColor(colorNumber){
             return "silver"
         default:
             return "black"
+    }
+}
+
+var tempVal = 64;
+var topLine = [495,496];
+var line = [527,528];
+var trail = [495, 496, 462, 465, 429, 434, 396, 403, 363, 372, 330, 341, 297, 310, 264, 279, 231, 248, 198, 217, 165, 186, 132, 155, 99, 124, 66, 93, 33, 62, 0, 31];
+var lineStart = 16;
+var lineOffset = 0;
+
+function demo(mode){
+    active=true;
+    colors = 2;
+    size = 32;
+
+    blockNum = 0;
+    target = 'green';
+    patternChoice=null;
+    animation=null;
+    const rootParent = document.getElementById("block-container");
+    removeChildren(rootParent);
+    generateBlock();
+
+    if(mode==0){
+        for(var i = 0; i<1024; i++){
+            const selectedBlock = document.getElementById("block"+i);
+            selectedBlock.style = "background-color: "+getColor(0)+"; width: 16px; height: 16px;";
+            if(trail.includes(i)) selectedBlock.style = "background-color: "+'rgba(0,0,0,' + (i/512) + ')'+"; width: 16px; height: 16px;";
+            if(line.includes(i-lineOffset)) selectedBlock.style = "background-color: "+getColor(1)+"; width: 16px; height: 16px;";
+            if(topLine.includes(i+lineOffset)) selectedBlock.style = "background-color: "+getColor(1)+"; width: 16px; height: 16px;";
+        }
+        lineOffset<480 ? lineOffset+=32 : lineOffset=0;
+        if(line.length<32){
+            line.push(line[line.length-1]+1);
+            line.unshift(line[0]-1);
+            topLine.push(topLine[topLine.length-1]+1);
+            topLine.unshift(topLine[0]-1);
+        }else{
+            line = [527,528];
+            topLine = [495,496];
+        }
+    }else{
+        for(var i = 0; i<1024; i++){
+            const selectedBlock = document.getElementById("block"+i);
+            
+            if(i%tempVal==0&&i!==0&&tempVal%32!==0){
+                selectedBlock.style = "background-color: "+getColor(1)+"; width: 16px; height: 16px;";
+            }else{
+                selectedBlock.style = "background-color: "+getColor(0)+"; width: 16px; height: 16px;";
+                // selectedBlock.style = "background-color: "+'rgba(0,0,0,' + (i/1024) + ')'+"; width: 16px; height: 16px;";
+            }
+        }
+        tempVal<256 ? tempVal+=4 : tempVal = 64;
+    }
+    if(active){
+        setTimeout(() => {
+            demo(mode);
+        }, 200);
     }
 }
