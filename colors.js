@@ -213,10 +213,11 @@ function getColor(colorNumber){
 
 var tempVal = 64;
 var topLine = [495,496];
-var line = [527,528];
+var bottomLine = [527,528];
 var trail = [495, 496, 462, 465, 429, 434, 396, 403, 363, 372, 330, 341, 297, 310, 264, 279, 231, 248, 198, 217, 165, 186, 132, 155, 99, 124, 66, 93, 33, 62, 0, 31];
-var lineStart = 16;
+trail = [527, 528, 558, 561, 589, 594, 620, 627, 651, 660, 682, 693, 713, 726, 744, 759, 775, 792, 806, 825, 837, 858, 868, 891, 899, 924, 930, 957, 961, 992, 990, 1023];
 var lineOffset = 0;
+var alpha = 0.05;
 
 function demo(mode){
     active=true;
@@ -234,20 +235,24 @@ function demo(mode){
     if(mode==0){
         for(var i = 0; i<1024; i++){
             const selectedBlock = document.getElementById("block"+i);
-            selectedBlock.style = "background-color: "+getColor(0)+"; width: 16px; height: 16px;";
-            if(trail.includes(i)) selectedBlock.style = "background-color: "+'rgba(0,0,0,' + (i/512) + ')'+"; width: 16px; height: 16px;";
-            if(line.includes(i-lineOffset)) selectedBlock.style = "background-color: "+getColor(1)+"; width: 16px; height: 16px;";
-            if(topLine.includes(i+lineOffset)) selectedBlock.style = "background-color: "+getColor(1)+"; width: 16px; height: 16px;";
+            let color = getColor(0);
+            if(topLine.includes(i+lineOffset)||bottomLine.includes(i-lineOffset)) color = `rgba(0,0,0,${alpha})`;
+            selectedBlock.style.backgroundColor = color;
+            selectedBlock.style.width = '16px';
+            selectedBlock.style.height = '16px';
         }
-        lineOffset<480 ? lineOffset+=32 : lineOffset=0;
-        if(line.length<32){
-            line.push(line[line.length-1]+1);
-            line.unshift(line[0]-1);
+        alpha+=0.05;
+        lineOffset+=32;
+        if(bottomLine.length<32){
+            bottomLine.push(bottomLine[bottomLine.length-1]+1);
+            bottomLine.unshift(bottomLine[0]-1);
             topLine.push(topLine[topLine.length-1]+1);
             topLine.unshift(topLine[0]-1);
         }else{
-            line = [527,528];
+            bottomLine = [527,528];
             topLine = [495,496];
+            alpha = 0.05;
+            lineOffset=0;
         }
     }else{
         for(var i = 0; i<1024; i++){
@@ -265,6 +270,6 @@ function demo(mode){
     if(active){
         setTimeout(() => {
             demo(mode);
-        }, 200);
+        }, 100);
     }
 }
