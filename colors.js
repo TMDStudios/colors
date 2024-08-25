@@ -212,16 +212,18 @@ function getColor(colorNumber){
 }
 
 var tempVal = 64;
-var topLine = [495,496];
-var bottomLine = [527,528];
-var trail = [495, 496, 462, 465, 429, 434, 396, 403, 363, 372, 330, 341, 297, 310, 264, 279, 231, 248, 198, 217, 165, 186, 132, 155, 99, 124, 66, 93, 33, 62, 0, 31];
-trail = [527, 528, 558, 561, 589, 594, 620, 627, 651, 660, 682, 693, 713, 726, 744, 759, 775, 792, 806, 825, 837, 858, 868, 891, 899, 924, 930, 957, 961, 992, 990, 1023];
-var lineOffset = 0;
-var alpha = 0.05;
+var topLine = [400,399];
+var lines = [
+    [527,528],
+    [620,621,622,623,624,625,626,627],
+    [713,714,715,716,717,718,719,720,721,722,723,724,725,726]
+]
+var offsets = [0,0,0];
+var alphas = [0.85,0.70,0.55]
 
-function demo(mode){
+async function demo(mode){
     active=true;
-    colors = 2;
+    colors = 1;
     size = 32;
 
     blockNum = 0;
@@ -233,31 +235,33 @@ function demo(mode){
     generateBlock();
 
     if(mode==0){
-        for(var i = 0; i<1024; i++){
+        for(var i=0; i<1024; i++){
             const selectedBlock = document.getElementById("block"+i);
             let color = getColor(0);
-            if(topLine.includes(i+lineOffset)||bottomLine.includes(i-lineOffset)) color = `rgba(0,0,0,${alpha})`;
+            if(lines[0].includes(i-offsets[0])) color = `rgba(0,0,0,${alphas[0]})`;
+            if(lines[1].includes(i-offsets[1])) color = `rgba(0,0,0,${alphas[1]})`;
+            if(lines[2].includes(i-offsets[2])) color = `rgba(0,0,0,${alphas[2]})`;
             selectedBlock.style.backgroundColor = color;
-            selectedBlock.style.width = '16px';
-            selectedBlock.style.height = '16px';
         }
-        alpha+=0.05;
-        lineOffset+=32;
-        if(bottomLine.length<32){
-            bottomLine.push(bottomLine[bottomLine.length-1]+1);
-            bottomLine.unshift(bottomLine[0]-1);
-            topLine.push(topLine[topLine.length-1]+1);
-            topLine.unshift(topLine[0]-1);
-        }else{
-            bottomLine = [527,528];
-            topLine = [495,496];
-            alpha = 0.05;
-            lineOffset=0;
+        for(let i=0; i<alphas.length; i++){
+            alphas[i]-=0.05;
+        }
+        for(let i=0; i<offsets.length; i++){
+            offsets[i]+=32;
+        }
+        for(let i=0; i<lines.length; i++){
+            if(lines[i].length<32){
+                lines[i].push(lines[i][lines[i].length-1]+1);
+                lines[i].unshift(lines[i][0]-1);
+            }else{
+                lines[i] = [527,528];
+                alphas[i] = 0.85;
+                offsets[i] = 0;
+            }
         }
     }else{
-        for(var i = 0; i<1024; i++){
+        for(var i=0; i<1024; i++){
             const selectedBlock = document.getElementById("block"+i);
-            
             if(i%tempVal==0&&i!==0&&tempVal%32!==0){
                 selectedBlock.style = "background-color: "+getColor(1)+"; width: 16px; height: 16px;";
             }else{
